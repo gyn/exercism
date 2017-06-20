@@ -1,7 +1,7 @@
 pub fn reply(greeting: &str) -> &str {
     let mut contains_upper = false;
     let mut contains_lower = false;
-    let mut last_nonspace  = ' ';
+    let mut last_nonspace = ' ';
 
     for c in greeting.chars() {
         if c.is_whitespace() {
@@ -19,8 +19,8 @@ pub fn reply(greeting: &str) -> &str {
         last_nonspace = c;
     }
 
-    let is_shouting   = contains_upper && !contains_lower;
-    let is_asking     = last_nonspace == '?';
+    let is_shouting = contains_upper && !contains_lower;
+    let is_asking = last_nonspace == '?';
     let is_addressing = last_nonspace == ' ';
 
     if is_shouting {

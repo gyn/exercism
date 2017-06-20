@@ -14,7 +14,7 @@ pub fn raindrops(number: usize) -> String {
     }
 
     if result.is_empty() {
-        return format!("{}", number)
+        return number.to_string()
     }
 
     result
