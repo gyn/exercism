@@ -5,7 +5,7 @@ pub fn is_valid(id: &str) -> bool {
     }
 
     let mut index: u32 = 0;
-    let mut number: Vec<u32> = Vec::new();
+    let mut sum: u32 = 0;
 
     for c in id.chars().rev() {
         if c.is_whitespace() {
@@ -29,15 +29,12 @@ pub fn is_valid(id: &str) -> bool {
         }
 
         index += 1;
-
-        number.push(v);
+        sum += v;
     }
 
-    if number.len() == 1 {
+    if index < 2 {
         return false;
     }
 
-    let r: u32 = number.iter().sum();
-
-    (r % 10) == 0
+    (sum % 10) == 0
 }
