@@ -29,39 +29,45 @@ impl Allergies {
 
         let value = self.result;
 
-        if value & Allergen::Eggs as u32 == Allergen::Eggs as u32 {
+        let mut item = Allergen::Eggs as u32;
+        if value & item == item {
             result.push(Allergen::Eggs);
         }
 
-        if value & Allergen::Peanuts as u32 == Allergen::Peanuts as u32 {
+        item = Allergen::Peanuts as u32;
+        if value & item == item {
             result.push(Allergen::Peanuts);
         }
 
-        if value & Allergen::Shellfish as u32 == Allergen::Shellfish as u32 {
+        item = Allergen::Shellfish as u32;
+        if value & item == item {
             result.push(Allergen::Shellfish);
         }
 
-        if value & Allergen::Strawberries as u32 == Allergen::Strawberries as u32 {
+        item = Allergen::Strawberries as u32;
+        if value & item == item {
             result.push(Allergen::Strawberries);
         }
 
-        if value & Allergen::Tomatoes as u32 == Allergen::Tomatoes as u32 {
+        item = Allergen::Tomatoes as u32;
+        if value & item == item {
             result.push(Allergen::Tomatoes);
         }
 
-        if value & Allergen::Chocolate as u32 == Allergen::Chocolate as u32 {
+        item = Allergen::Chocolate as u32;
+        if value & item == item {
             result.push(Allergen::Chocolate);
         }
 
-        if value & Allergen::Pollen as u32 == Allergen::Pollen as u32 {
+        item = Allergen::Pollen as u32;
+        if value & item == item {
             result.push(Allergen::Pollen);
         }
 
-        if value & Allergen::Cats as u32 == Allergen::Cats as u32 {
+        item = Allergen::Cats as u32;
+        if value & item == item {
             result.push(Allergen::Cats)
         }
-
-        println!("{:?}", result);
 
         result
     }
