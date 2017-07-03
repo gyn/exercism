@@ -20,10 +20,9 @@ pub fn verse(index: usize) -> String {
         }
         _ => {
             format!(
-                "{} bottles of beer on the wall, {} bottles of beer.\n\
-                 Take one down and pass it around, {} bottles of beer \
+                "{0} bottles of beer on the wall, {0} bottles of beer.\n\
+                 Take one down and pass it around, {1} bottles of beer \
                  on the wall.\n",
-                index,
                 index,
                 index - 1
             )
