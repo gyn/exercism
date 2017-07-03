@@ -1,74 +1,46 @@
 #[derive(Debug, Clone, PartialEq)]
+#[repr(usize)]
 pub enum Allergen {
-    Eggs = 0x0000_0001,
-    Peanuts = 0x0000_0002,
-    Shellfish = 0x0000_0004,
-    Strawberries = 0x0000_0008,
-    Tomatoes = 0x0000_0010,
-    Chocolate = 0x0000_0020,
-    Pollen = 0x0000_0040,
-    Cats = 0x0000_0080,
+    Eggs,
+    Peanuts,
+    Shellfish,
+    Strawberries,
+    Tomatoes,
+    Chocolate,
+    Pollen,
+    Cats,
+    Max,
+}
+
+impl From<usize> for Allergen {
+    #[inline]
+    fn from(t: usize) -> Allergen {
+        assert!(t < Allergen::Max as usize);
+        unsafe { std::mem::transmute(t) }
+    }
 }
 
 #[derive(Debug)]
-pub struct Allergies {
-    result: u32,
-}
+pub struct Allergies(usize);
 
 impl Allergies {
-    pub fn new(score: u32) -> Allergies {
-        Allergies { result: score }
+    pub fn new(score: usize) -> Allergies {
+        Allergies(score)
     }
 
     pub fn is_allergic_to(&self, item: &Allergen) -> bool {
-        self.result & (*item).clone() as u32 != 0
+        let v = (*item).clone() as usize;
+
+        self.0 & (1usize << v) != 0
     }
 
     pub fn allergies(&self) -> Vec<Allergen> {
-        let mut result: Vec<Allergen> = Vec::new();
+        let lower = Allergen::Eggs as usize;
+        let upper = Allergen::Max as usize;
 
-        let value = self.result;
-
-        let mut item = Allergen::Eggs as u32;
-        if value & item == item {
-            result.push(Allergen::Eggs);
-        }
-
-        item = Allergen::Peanuts as u32;
-        if value & item == item {
-            result.push(Allergen::Peanuts);
-        }
-
-        item = Allergen::Shellfish as u32;
-        if value & item == item {
-            result.push(Allergen::Shellfish);
-        }
-
-        item = Allergen::Strawberries as u32;
-        if value & item == item {
-            result.push(Allergen::Strawberries);
-        }
-
-        item = Allergen::Tomatoes as u32;
-        if value & item == item {
-            result.push(Allergen::Tomatoes);
-        }
-
-        item = Allergen::Chocolate as u32;
-        if value & item == item {
-            result.push(Allergen::Chocolate);
-        }
-
-        item = Allergen::Pollen as u32;
-        if value & item == item {
-            result.push(Allergen::Pollen);
-        }
-
-        item = Allergen::Cats as u32;
-        if value & item == item {
-            result.push(Allergen::Cats)
-        }
-
-        result
+        (lower..upper)
+            .filter(|x| self.is_allergic_to(&Allergen::from(*x)))
+            .map(|x| Allergen::from(x))
+            .collect()
     }
 }
