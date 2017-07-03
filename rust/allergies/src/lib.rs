@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 #[repr(usize)]
 pub enum Allergen {
     Eggs,
