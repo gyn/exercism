@@ -1,43 +1,26 @@
 #![feature(ascii_ctype)]
 use std::ascii::AsciiExt;
 
-
-fn check_countrycode(mut phone: Vec<u8>) -> Option<String> {
-    println!("{:?}", phone);
-
-    if phone[0] != b'1' {
-        return None;
-    }
-
-    String::from_utf8(phone.drain(1..).collect()).ok()
-}
-
-pub fn number(phone: &str) -> Option<String> {
+pub fn number<S>(phone: S) -> Option<String> where S: Into<String> {
     let result = phone
+        .into()
         .chars()
         .filter(|x| x.is_ascii_digit())
-        .map(|x| x as u8)
-        .collect::<Vec<u8>>();
+        .collect::<String>();
 
     match result.len() {
-        11 => check_countrycode(result),
-        10 => String::from_utf8(result).ok(),
+        11 if result.starts_with('1') => Some(result[1..].to_string()),
+        10 => Some(result),
         _ => None,
     }
 }
 
-pub fn area_code(phone: &str) -> Option<String> {
+pub fn area_code<S>(phone: S) -> Option<String> where S: Into<String> {
     number(phone).map(|r| r[..3].to_string())
 }
 
-pub fn pretty_print(phone: &str) -> String {
-    let v = number(phone);
-
-    if v.is_none() {
-        return "invalid".to_string();
-    }
-
-    let r = v.unwrap();
-
-    format!("({}) {}-{}", &r[..3], &r[3..6], &r[6..])
+pub fn pretty_print<S>(phone: S) -> String where S: Into<String> {
+    number(phone).map_or("invalid".to_string(), |r| {
+        format!("({}) {}-{}", &r[..3], &r[3..6], &r[6..])
+    })
 }
