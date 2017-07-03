@@ -39,8 +39,8 @@ impl Allergies {
         let upper = Allergen::Max as usize;
 
         (lower..upper)
-            .filter(|x| self.is_allergic_to(&Allergen::from(*x)))
             .map(|x| Allergen::from(x))
+            .filter(|x| self.is_allergic_to(x))
             .collect()
     }
 }
