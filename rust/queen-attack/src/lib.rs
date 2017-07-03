@@ -30,17 +30,9 @@ impl Queen {
     }
 
     pub fn can_attack(&self, q: &Queen) -> bool {
-        if self.pos.x == q.pos.x {
-            return true;
-        }
-        
-        if self.pos.y == q.pos.y {
-            return true;
-        }
+        let xdelta = self.pos.x - q.pos.x;
+        let ydelta = self.pos.y - q.pos.y;
 
-        let xdelta = (self.pos.x - q.pos.x).abs();
-        let ydelta = (self.pos.y - q.pos.y).abs();
-
-        xdelta == ydelta
+        xdelta == 0 || ydelta == 0 || xdelta.abs() == ydelta.abs()
     }
 }
