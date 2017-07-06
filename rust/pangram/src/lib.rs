@@ -9,7 +9,9 @@ pub fn is_pangram(words: &str) -> bool {
             continue;
         }
 
-        score[v.to_ascii_lowercase() as usize - 'a' as usize] = true;
+        let index = v.to_ascii_lowercase() as usize - 'a' as usize;
+
+        score[index] = true;
     }
 
     score.iter().all(|&x| x)
