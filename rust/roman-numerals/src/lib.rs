@@ -1,12 +1,10 @@
 #[derive(Debug)]
-pub struct Roman {
-    value: u32,
-}
+pub struct Roman(u32);
 
 impl From<u32> for Roman {
     #[inline]
     fn from(v: u32) -> Roman {
-        Roman { value: v }
+        Roman(v)
     }
 }
 
@@ -14,7 +12,7 @@ const ROMAN_DIGITS: [(u32, [&'static str; 10]); 4] =
     [
         (
             1000,
-            ["", "M", "MM", "MMM", "", "", "", "", "", ""]
+            ["", "M", "MM", "MMM", "", "", "", "", "", ""],
         ),
         (
             100,
@@ -33,9 +31,9 @@ const ROMAN_DIGITS: [(u32, [&'static str; 10]); 4] =
 impl ToString for Roman {
     #[inline]
     fn to_string(&self) -> String {
-        assert!(self.value <= 3000);
+        assert!(self.0 <= 3000);
 
-        let mut digit = self.value;
+        let mut digit = self.0;
         let mut result = String::new();
 
         for v in &ROMAN_DIGITS {
