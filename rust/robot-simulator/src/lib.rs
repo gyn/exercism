@@ -9,26 +9,6 @@ pub enum Direction {
     West,
 }
 
-impl Direction {
-    fn turn_right(self) -> Self {
-        match self {
-            Direction::North => Direction::East,
-            Direction::East => Direction::South,
-            Direction::South => Direction::West,
-            Direction::West => Direction::North,
-        }
-    }
-
-    fn turn_left(self) -> Self {
-        match self {
-            Direction::North => Direction::West,
-            Direction::East => Direction::North,
-            Direction::South => Direction::East,
-            Direction::West => Direction::South,
-        }
-    }
-}
-
 pub struct Robot {
     rx: isize,
     ry: isize,
@@ -49,7 +29,12 @@ impl Robot {
         Robot {
             rx: self.rx,
             ry: self.ry,
-            rd: self.rd.turn_right(),
+            rd: match self.rd {
+                Direction::North => Direction::East,
+                Direction::East => Direction::South,
+                Direction::South => Direction::West,
+                Direction::West => Direction::North,
+            },
         }
     }
 
@@ -57,7 +42,12 @@ impl Robot {
         Robot {
             rx: self.rx,
             ry: self.ry,
-            rd: self.rd.turn_left(),
+            rd: match self.rd {
+                Direction::North => Direction::West,
+                Direction::East => Direction::North,
+                Direction::South => Direction::East,
+                Direction::West => Direction::South,
+            },
         }
     }
 
