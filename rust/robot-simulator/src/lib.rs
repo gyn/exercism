@@ -27,48 +27,41 @@ impl Robot {
 
     pub fn turn_right(self) -> Self {
         Robot {
-            rx: self.rx,
-            ry: self.ry,
             rd: match self.rd {
                 Direction::North => Direction::East,
                 Direction::East => Direction::South,
                 Direction::South => Direction::West,
                 Direction::West => Direction::North,
             },
+            ..self
         }
     }
 
     pub fn turn_left(self) -> Self {
         Robot {
-            rx: self.rx,
-            ry: self.ry,
             rd: match self.rd {
                 Direction::North => Direction::West,
                 Direction::East => Direction::North,
                 Direction::South => Direction::East,
                 Direction::West => Direction::South,
             },
+            ..self
         }
     }
 
     pub fn advance(self) -> Self {
-        let (x, y) = match self.rd {
-            Direction::North => (self.rx, self.ry + 1),
-            Direction::East => (self.rx + 1, self.ry),
-            Direction::South => (self.rx, self.ry - 1),
-            Direction::West => (self.rx - 1, self.ry),
-        };
-
-        Robot {
-            rx: x,
-            ry: y,
-            rd: self.rd,
+        match self.rd {
+            Direction::North => Robot{ry: self.ry + 1, ..self},
+            Direction::East => Robot{rx: self.rx + 1, ..self},
+            Direction::South => Robot{ry: self.ry - 1, ..self},
+            Direction::West => Robot{rx: self.rx - 1, ..self},
         }
     }
 
     #[allow(unused_variables)]
     pub fn instructions(self, instructions: &str) -> Self {
         let mut r = self;
+
         for c in instructions.chars() {
             r = match c {
                 'L' => r.turn_left(),
