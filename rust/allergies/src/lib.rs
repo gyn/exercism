@@ -24,12 +24,12 @@ impl From<usize> for Allergen {
 pub struct Allergies(usize);
 
 impl Allergies {
-    pub fn new(score: usize) -> Allergies {
+    pub fn new(score: usize) -> Self {
         Allergies(score)
     }
 
     pub fn is_allergic_to(&self, item: &Allergen) -> bool {
-        let v = (*item).clone() as usize;
+        let v = (*item) as usize;
 
         self.0 & (1usize << v) != 0
     }

@@ -2,7 +2,7 @@
 pub struct RibonucleicAcid(String);
 
 impl RibonucleicAcid {
-    pub fn new(serial: &str) -> RibonucleicAcid {
+    pub fn new(serial: &str) -> Self {
         RibonucleicAcid(serial.to_string())
     }
 }
@@ -11,7 +11,7 @@ impl RibonucleicAcid {
 pub struct DeoxyribonucleicAcid(String);
 
 impl DeoxyribonucleicAcid {
-    pub fn new(serial: &str) -> DeoxyribonucleicAcid {
+    pub fn new(serial: &str) -> Self {
         DeoxyribonucleicAcid(serial.to_string())
     }
 

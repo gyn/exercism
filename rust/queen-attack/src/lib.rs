@@ -25,7 +25,7 @@ pub struct Queen {
 }
 
 impl Queen {
-    pub fn new(x: ChessPosition) -> Queen {
+    pub fn new(x: ChessPosition) -> Self {
         Queen{pos: x}
     }
 
