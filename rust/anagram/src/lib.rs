@@ -4,10 +4,7 @@ fn anagrams(word: &str) -> HashMap<char, u32> {
     let mut result: HashMap<char, u32> = HashMap::new();
 
     for k in word.chars() {
-        let v = match result.get(&k) {
-            Some(v) => v + 1,
-            None => 1,
-        };
+        let v = result.get(&k).map_or(1, |v| v + 1);
 
         result.insert(k, v);
     }
