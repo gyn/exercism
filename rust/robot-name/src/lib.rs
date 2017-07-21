@@ -36,5 +36,5 @@ fn random_name(name: &mut String) {
 
     let d = digi_range.ind_sample(&mut rng);
 
-    *name = format!("{}{}{}", char::from(c1), char::from(c2), d);
+    *name = format!("{}{}{:03}", char::from(c1), char::from(c2), d);
 }
