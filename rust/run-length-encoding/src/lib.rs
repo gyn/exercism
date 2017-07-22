@@ -1,5 +1,4 @@
 pub fn encode(text: &str) -> String {
-
     let mut count = 0;
     let mut result = String::new();
     let mut iter = text.chars().peekable();
