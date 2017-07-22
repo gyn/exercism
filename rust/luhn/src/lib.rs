@@ -14,9 +14,10 @@ pub fn is_valid(id: &str) -> bool {
 
         let mut v: u32;
 
-        match c.to_digit(10) {
-            Some(d) => v = d,
-            None => return false,
+        if let Some(d) = c.to_digit(10) {
+            v = d;
+        } else {
+            return false;
         }
 
         if index % 2 != 0 {
@@ -25,7 +26,6 @@ pub fn is_valid(id: &str) -> bool {
             if v > 9 {
                 v -= 9;
             }
-
         }
 
         index += 1;
