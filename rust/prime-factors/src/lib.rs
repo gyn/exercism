@@ -1,43 +1,16 @@
-#[inline]
-fn is_prime(n: u64) -> bool {
-    if n <= 1 {
-        return false;
-    }
-
-    if n <= 3 {
-        return true;
-    }
-
-    if n % 2 == 0 || n % 3 == 0 {
-        return false;
-    }
-
-    let mut i = 5;
-    while i * i <= n {
-        if n % i == 0 || n % (i + 2) == 0 {
-            return false;
-        }
-
-        i += 6;
-    }
-
-    true
-}
-
 pub fn factors(number: u64) -> Vec<u64> {
-    let mut p = 2;
-    let mut v = number;
+    let mut i = 2;
+    let mut cur = number;
     let mut result = Vec::new();
 
-    while p <= v {
-        if !is_prime(p) || v % p != 0 {
-            p += 1;
-            continue;
+    while cur > 1 {
+        if cur % i == 0 {
+            result.push(i);
+
+            cur /= i;
+        } else {
+            i += 1;
         }
-
-        v /= p;
-
-        result.push(p);
     }
 
     result
