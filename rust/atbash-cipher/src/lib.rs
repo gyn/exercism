@@ -1,6 +1,9 @@
 #![feature(ascii_ctype)]
 use std::ascii::AsciiExt;
 
+const LA: u8 = b'a';
+const LZ: u8 = b'z';
+
 pub fn encode(message: &str) -> String {
     let mut index = 0;
     message
@@ -8,11 +11,11 @@ pub fn encode(message: &str) -> String {
         .filter_map(|c| match c {
             _ if c.is_ascii_digit() => Some(c),
             _ if c.is_ascii_uppercase() => {
-                let v = b'z' - c.to_ascii_lowercase() as u8 + b'a';
+                let v = LZ - c.to_ascii_lowercase() as u8 + LA;
                 Some(v as char)
             }
             _ if c.is_ascii_lowercase() => {
-                let v = b'z' - c as u8 + b'a';
+                let v = LZ - c as u8 + LA;
                 Some(v as char)
             }
             _ => None,
@@ -35,7 +38,7 @@ pub fn decode(message: &str) -> String {
         .filter_map(|c| match c {
             _ if c.is_ascii_digit() => Some(c),
             _ if c.is_ascii_lowercase() => {
-                let v = b'z' - c as u8 + b'a';
+                let v = LZ - c as u8 + LA;
                 Some(v as char)
             }
             _ => None,
