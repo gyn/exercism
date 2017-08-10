@@ -1,5 +1,4 @@
 pub fn is_valid(id: &str) -> bool {
-    // check the length
     if id.len() < 2 {
         return false;
     }
