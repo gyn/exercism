@@ -16,21 +16,18 @@ impl DeoxyribonucleicAcid {
     }
 
     pub fn to_rna(&self) -> Result<RibonucleicAcid, String> {
-        let rna = self.0
-            .chars()
-            .filter_map(|c| match c {
-                'A' => Some('U'),
-                'C' => Some('G'),
-                'G' => Some('C'),
-                'T' => Some('A'),
-                _ => None,
-            })
-            .collect::<String>();
+        let mut result = String::with_capacity(self.0.len());
 
-        if rna.len() != self.0.len() {
-            return Err("Invalid DNA serial".to_string());
+        for c in self.0.chars() {
+            match c {
+                'A' => result.push('U'),
+                'C' => result.push('G'),
+                'G' => result.push('C'),
+                'T' => result.push('A'),
+                _ => return Err("Invalid DNA serial".to_string()),
+            }
         }
 
-        Ok(RibonucleicAcid(rna))
+        Ok(RibonucleicAcid(result))
     }
 }
