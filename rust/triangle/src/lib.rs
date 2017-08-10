@@ -7,8 +7,6 @@ pub struct Triangle {
 
 impl Triangle {
     pub fn build(t: [usize; 3]) -> Result<Triangle, String> {
-        println!("{:?} {:?} {:?} {:?}", t, t[0], t[1], t[2]);
-
         if t[0] == 0 || t[1] == 0 || t[2] == 0 {
             return Err("Invalid side length".to_string());
         }
