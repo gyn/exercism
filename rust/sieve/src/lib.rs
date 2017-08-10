@@ -21,7 +21,5 @@ pub fn primes_up_to(limit: u32) -> Vec<u32> {
         }
     }
 
-    (2..limit + 1)
-        .filter(|&x| board[x as usize - 2])
-        .collect::<Vec<u32>>()
+    (2..limit + 1).filter(|&x| board[x as usize - 2]).collect()
 }
