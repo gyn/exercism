@@ -11,11 +11,8 @@ where
     }
 }
 
-pub fn is_valid(id: &str) -> bool {
-    if id.len() < 2 {
-        return false;
-    }
-
+#[inline]
+fn is_valid(id: &str) -> bool {
     let mut index: u32 = 0;
     let mut sum: u32 = 0;
 
@@ -24,15 +21,12 @@ pub fn is_valid(id: &str) -> bool {
             continue;
         }
 
-        let mut v: u32;
+        let mut v = match c.to_digit(10) {
+            Some(d) => d,
+            None => return false,
+        };
 
-        if let Some(d) = c.to_digit(10) {
-            v = d;
-        } else {
-            return false;
-        }
-
-        if index % 2 != 0 {
+        if index & 1 != 0 {
             v *= 2;
 
             if v > 9 {
@@ -44,9 +38,5 @@ pub fn is_valid(id: &str) -> bool {
         sum += v;
     }
 
-    if index < 2 {
-        return false;
-    }
-
-    (sum % 10) == 0
+    index >= 2 && sum % 10 == 0
 }
