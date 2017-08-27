@@ -3,7 +3,6 @@
 
 #include <string>
 #include <stack>
-#include <iostream>
 
 namespace bracket_push {
     static inline bool is_matched(std::stack<char> &v, char expected) {
