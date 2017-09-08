@@ -9,11 +9,7 @@ pub fn abbreviate<S>(name: S) -> String where S: Into<String> {
                 next_capital = false;
                 Some(x.to_uppercase().to_string())
             }
-            _ if x == '-' => {
-                next_capital = true;
-                None
-            }
-            _ if x.is_whitespace() => {
+            _ if x == '-' || x.is_whitespace() => {
                 next_capital = true;
                 None
             }
