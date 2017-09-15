@@ -1,9 +1,9 @@
 package twofer
 
-// Share produces a string "One for (name|you), one for me."
+// ShareWith produces a string "One for (name|you), one for me."
 func ShareWith(name string) string {
 	object := name
-	if len(name) == 0  {
+	if len(name) == 0 {
 		object = "you"
 	}
 
