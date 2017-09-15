@@ -1,6 +1,9 @@
 package hamming
 
-import "errors"
+import (
+	"errors"
+	"unicode/utf8"
+)
 
 const testVersion = 6
 
@@ -11,7 +14,7 @@ func Distance(a, b string) (int, error) {
 	}
 
 	count := 0
-	for i := 0; i < len(a); i++ {
+	for i := 0; i < utf8.RuneCountInString(a); i++ {
 		if a[i] != b[i] {
 			count++
 		}
