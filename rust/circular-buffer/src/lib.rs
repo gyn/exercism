@@ -1,5 +1,6 @@
 use std::collections::VecDeque;
 
+#[derive(Debug)]
 pub struct CircularBuffer<T> {
     buffer: VecDeque<T>,
     size: usize,
@@ -20,11 +21,15 @@ impl<T> CircularBuffer<T> {
     }
 
     pub fn read(&mut self) -> Result<T, Error> {
+        if self.size == 0 {
+            return Err(Error::FullBuffer);
+        }
+
         self.buffer.pop_front().ok_or(Error::EmptyBuffer)
     }
 
     pub fn write(&mut self, v: T) -> Result<usize, Error> {
-        if self.buffer.len() == self.size {
+        if self.size == 0 || self.buffer.len() == self.size {
             return Err(Error::FullBuffer);
         }
 
@@ -34,6 +39,10 @@ impl<T> CircularBuffer<T> {
     }
 
     pub fn overwrite(&mut self, v: T) {
+        if self.size == 0 {
+            return;
+        }
+
         if self.buffer.len() == self.size {
             self.buffer.pop_front().unwrap();
         }
