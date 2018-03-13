@@ -25,6 +25,6 @@ func Age(second float64, planet Planet) float64 {
 		factor = 164.79132
 	default:
 	}
-	
+
 	return second / scale / factor
 }
