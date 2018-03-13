@@ -1,7 +1,9 @@
 package space
 
+// Planet name
 type Planet string
 
+// Age returns the planet years for specific second
 func Age(second float64, planet Planet) float64 {
 	const scale = 31557600.0
 
