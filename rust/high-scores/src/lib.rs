@@ -1,3 +1,5 @@
+use std::mem;
+
 const MAX_TOP_SCORE_ITEMS: usize = 3;
 
 #[derive(Debug)]
@@ -23,8 +25,23 @@ impl<'a> HighScores<'a> {
     }
 
     pub fn personal_top_three(&self) -> Vec<u32> {
-        let mut result = self.record.to_vec();
-        result.sort_by(|a, b| b.cmp(a));
-        result.into_iter().take(MAX_TOP_SCORE_ITEMS).collect()
+        let mut top_scores = Vec::with_capacity(MAX_TOP_SCORE_ITEMS);
+
+        for i in self.record.iter() {
+            let mut hold = *i;
+
+            for i in 0..MAX_TOP_SCORE_ITEMS {
+                if let Some(v) = top_scores.get_mut(i) {
+                    if hold > *v {
+                        mem::swap(&mut hold, v);
+                    }
+                } else {
+                    top_scores.push(hold);
+                    break;
+                }
+            }
+        }
+
+        top_scores
     }
 }
