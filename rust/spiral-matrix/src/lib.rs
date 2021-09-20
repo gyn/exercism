@@ -1,66 +1,66 @@
-fn spiral_index(x: i32, y: i32) -> i32 {
-    let mut p: i32;
-
-    if y * y >= x * x {
-        p = 4 * y * y - y - x;
-        if y < x {
-            p -= 2 * (y - x);
-        }
-    } else {
-        p = 4 * x * x - y - x;
-        if y < x {
-            p += 2 * (y - x);
-        }
-    }
-
-    p
-}
+//
+// This is smart but slow
+//
+//fn spiral(width: u32, height: u32, x: u32, y: u32) -> u32 {
+//    if y == 0 {
+//        x + 1
+//    } else {
+//        width + spiral(height - 1, width, y - 1, width - x - 1)
+//    }
+//}
+//
+//pub fn spiral_matrix(size: u32) -> Vec<Vec<u32>> {
+//    (0..size)
+//        .map(|y| (0..size).map(|x| spiral(size, size, x, y)).collect())
+//        .collect()
+//}
 
 pub fn spiral_matrix(size: u32) -> Vec<Vec<u32>> {
-    let mut result = Vec::new();
-
     if size == 0 {
-        return result;
+        return Vec::new();
     }
 
-    let width: i32 = size as i32;
+    let mut result = vec![vec![0; size as usize]; size as usize];
 
-    let sx = if width % 2 == 1 {
-        width / 2
-    } else {
-        (1 - width) / 2
-    };
-    let ex = if width % 2 == 1 {
-        (1 - width) / 2 - 1
-    } else {
-        width / 2 + 1
-    };
-    let dx = if width % 2 == 1 { -1 } else { 1 };
-    let sy = if width % 2 == 1 {
-        (1 - width) / 2
-    } else {
-        width / 2
-    };
-    let ey = if width % 2 == 1 {
-        width / 2 + 1
-    } else {
-        (1 - width) / 2 - 1
-    };
-    let dy = if width % 2 == 1 { 1 } else { -1 };
+    let mut left = 0usize;
+    let mut top = 0usize;
+    let mut right = size as usize;
+    let mut bottom = size as usize;
 
-    let mut y = sy;
-    while y != ey {
-        let mut v = Vec::new();
+    let mut value = 1;
 
-        let mut x = sx;
-        while x != ex {
-            let r = width * width - spiral_index(x, y);
-            v.push(r as u32);
-            x += dx;
+    while left < right && top < bottom {
+        // fill top line
+        for x in left..right {
+            result[top][x] = value;
+
+            value += 1;
         }
+        top += 1;
 
-        result.push(v);
-        y += dy;
+        // fill right line
+        for y in top..bottom {
+            result[y][right - 1] = value;
+
+            value += 1;
+        }
+        right -= 1;
+
+        // fill bottom lime
+        for x in (left..right).rev() {
+            result[bottom - 1][x] = value;
+
+            value += 1;
+        }
+        bottom -= 1;
+
+        // fill left line
+        for y in (top..bottom).rev() {
+            result[y][left] = value;
+
+            value += 1;
+        }
+        left += 1;
     }
 
     result
