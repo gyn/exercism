@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 #[derive(Debug, PartialEq, Eq)]
 pub struct Palindrome {
     v: Vec<(u64, u64)>,
@@ -7,6 +9,10 @@ impl Palindrome {
     pub fn new(a: u64, b: u64) -> Palindrome {
         Palindrome { v: vec![(a, b)] }
     }
+
+    //pub fn value(&self) -> u64 {
+    //    unimplemented!("return the value of this palindrome")
+    //}
 
     pub fn insert(&mut self, a: u64, b: u64) {
         self.v.push((a, b))
@@ -43,16 +49,26 @@ pub fn palindrome_products(min: u64, max: u64) -> Option<(Palindrome, Palindrome
                 continue;
             }
 
-            if v < min_value {
-                min_value = v;
-                min_set = Palindrome::new(i, j);
-            } else if v == min_value {
-                min_set.insert(i, j);
-            } else if v > max_value {
-                max_value = v;
-                max_set = Palindrome::new(i, j);
-            } else if v == max_value {
-                max_set.insert(i, j);
+            match v.cmp(&min_value) {
+                Ordering::Less => {
+                    min_value = v;
+                    min_set = Palindrome::new(i, j);
+                }
+                Ordering::Equal => {
+                    min_set.insert(i, j);
+                }
+                _ => {}
+            }
+
+            match v.cmp(&max_value) {
+                Ordering::Greater => {
+                    max_value = v;
+                    max_set = Palindrome::new(i, j);
+                }
+                Ordering::Equal => {
+                    max_set.insert(i, j);
+                }
+                _ => {}
             }
         }
     }
